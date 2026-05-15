@@ -98,6 +98,12 @@ CREATE TABLE settings (
 );
 ```
 
+## 代码仓库
+
+- **仓库**: `git@github.com:AshleyWang1231/pawse.git`
+- **本地开发目录**: `~/pawse/`
+- **目录结构**: 仓库根目录即 Tauri 项目根目录
+
 ## 模块拆分（开发顺序）
 
 ### Module A — App Shell (Tauri 基础框架)

@@ -8,27 +8,33 @@
 
 **开发平台:** Ubuntu（优先）；打包目标 Ubuntu + macOS + Windows
 
-**工作目录:** `apps/pawse/`
+**代码仓库:** `git@github.com:AshleyWang1231/pawse.git`
+**本地开发目录:** `~/pawse/`
 
 ---
 
 ## Task 1: 初始化 Tauri + React 项目
 
-**Files:**
-- Create: `apps/pawse/` (Tauri v2 项目根目录)
-- Create: `apps/pawse/src/` (React 前端)
-- Create: `apps/pawse/src-tauri/` (Rust 后端)
+> 直接在 pawse 仓库根目录创建 Tauri 项目
 
-**Step 1: 创建项目**
+**Files:**
+- Create: `~/pawse/` (仓库根目录 → Tauri v2 项目根目录)
+- Create: `~/pawse/src/` (React 前端)
+- Create: `~/pawse/src-tauri/` (Rust 后端)
+
+**Step 1: 克隆并初始化 Tauri 项目**
 ```bash
-cd ~/.openclaw/workspace
-# Tauri v2 交互式创建，选择 React + TypeScript + Vite
-cargo create-tauri-app pawse --template react-ts --manager npm
+cd ~
+git clone git@github.com:AshleyWang1231/pawse.git pawse
+cd pawse
+# 在已有仓库中初始化 Tauri (src-tauri 目录)
+cargo install create-tauri-app
+cargo create-tauri-app . --template react-ts --manager npm
 ```
 
 **Step 2: 验证项目可用**
 ```bash
-cd apps/pawse
+cd ~/pawse
 npm install
 npm run tauri dev
 ```
@@ -36,7 +42,9 @@ npm run tauri dev
 
 **Step 3: 提交**
 ```bash
-git add apps/pawse/ && git commit -m "feat: init Tauri v2 + React TS project"
+cd ~/pawse
+git add . && git commit -m "feat: init Tauri v2 + React TS project"
+git push
 ```
 
 ---
@@ -44,13 +52,13 @@ git add apps/pawse/ && git commit -m "feat: init Tauri v2 + React TS project"
 ## Task 2: 安装配置 TailwindCSS + Framer Motion
 
 **Files:**
-- Modify: `apps/pawse/package.json`
-- Modify: `apps/pawse/src/App.tsx`
-- Modify: `apps/pawse/src/index.css`
+- Modify: `~/pawse/package.json`
+- Modify: `~/pawse/src/App.tsx`
+- Modify: `~/pawse/src/index.css`
 
 **Step 1: 安装依赖**
 ```bash
-cd apps/pawse
+cd ~/pawse
 npm install -D tailwindcss @tailwindcss/vite
 npm install framer-motion
 ```
@@ -79,13 +87,13 @@ function App() {
 
 **Step 4: 验证**
 ```bash
-npm run tauri dev
+cd ~/pawse && npm run tauri dev
 ```
 预期: Pawse logo 渐变出现
 
 **Step 5: 提交**
 ```bash
-git add . && git commit -m "feat: add TailwindCSS + Framer Motion"
+cd ~/pawse && git add . && git commit -m "feat: add TailwindCSS + Framer Motion" && git push
 ```
 
 ---
@@ -93,17 +101,17 @@ git add . && git commit -m "feat: add TailwindCSS + Framer Motion"
 ## Task 3: 基础路由 + 页面骨架
 
 **Files:**
-- Create: `apps/pawse/src/pages/Welcome.tsx`
-- Create: `apps/pawse/src/pages/UploadPet.tsx`
-- Create: `apps/pawse/src/pages/GeneratePet.tsx`
-- Create: `apps/pawse/src/pages/Dashboard.tsx`
-- Create: `apps/pawse/src/pages/Settings.tsx`
-- Modify: `apps/pawse/src/App.tsx`
+- Create: `~/pawse/src/pages/Welcome.tsx`
+- Create: `~/pawse/src/pages/UploadPet.tsx`
+- Create: `~/pawse/src/pages/GeneratePet.tsx`
+- Create: `~/pawse/src/pages/Dashboard.tsx`
+- Create: `~/pawse/src/pages/Settings.tsx`
+- Modify: `~/pawse/src/App.tsx`
 - Install: `react-router-dom`
 
 **Step 1: 安装 react-router-dom**
 ```bash
-npm install react-router-dom
+cd ~/pawse && npm install react-router-dom
 ```
 
 **Step 2: 创建 5 个页面组件（每个含标题和基本布局）**
@@ -145,13 +153,13 @@ function App() {
 
 **Step 4: 验证**
 ```bash
-npm run tauri dev
+cd ~/pawse && npm run tauri dev
 ```
 预期: 路由可切换，能看到每个页面的标题
 
 **Step 5: 提交**
 ```bash
-git add . && git commit -m "feat: routing + 5 page skeletons"
+cd ~/pawse && git add . && git commit -m "feat: routing + 5 page skeletons" && git push
 ```
 
 ---
@@ -159,13 +167,13 @@ git add . && git commit -m "feat: routing + 5 page skeletons"
 ## Task 4: SQLite 数据库层
 
 **Files:**
-- Create: `apps/pawse/src/services/database.ts`
-- Modify: `apps/pawse/src-tauri/Cargo.toml`
+- Create: `~/pawse/src/services/database.ts`
+- Modify: `~/pawse/src-tauri/Cargo.toml`
 - Add: `tauri-plugin-sql`
 
 **Step 1: 安装 tauri-plugin-sql**
 ```bash
-cd apps/pawse
+cd ~/pawse
 npm install @tauri-apps/plugin-sql
 cd src-tauri && cargo add tauri-plugin-sql --features sqlite && cd ..
 ```
@@ -218,13 +226,13 @@ export function getDB() {
 
 **Step 4: 验证 DB 初始化**
 ```bash
-npm run tauri dev
+cd ~/pawse && npm run tauri dev
 ```
 在浏览器 devtools 中检查 DB 是否正常创建
 
 **Step 5: 提交**
 ```bash
-git add . && git commit -m "feat: SQLite database layer with pets & settings tables"
+cd ~/pawse && git add . && git commit -m "feat: SQLite database layer with pets & settings tables" && git push
 ```
 
 ---
@@ -232,13 +240,13 @@ git add . && git commit -m "feat: SQLite database layer with pets & settings tab
 ## Task 5: 工作计时器系统
 
 **Files:**
-- Create: `apps/pawse/src/services/timer.ts`
-- Create: `apps/pawse/src/hooks/useTimer.ts`
-- Create: `apps/pawse/src/stores/timerStore.ts`
+- Create: `~/pawse/src/services/timer.ts`
+- Create: `~/pawse/src/hooks/useTimer.ts`
+- Create: `~/pawse/src/stores/timerStore.ts`
 
 **Step 1: 安装 zustand（状态管理）**
 ```bash
-npm install zustand
+cd ~/pawse && npm install zustand
 ```
 
 **Step 2: 创建 timerStore**
@@ -270,22 +278,18 @@ interface TimerStore {
 监听键盘/鼠标事件，更新 idle 状态和 tick。
 
 **Step 4: 创建 timer.ts 服务**
-```typescript
-// 导出 ActivityTracker 类
-// 监听 mousemove, keydown, mousedown
-// 5 分钟无操作 → setIdle(true)
-// 有操作 → setIdle(false)
-```
+监听 mousemove, keydown, mousedown
+5 分钟无操作 → setIdle(true)
+有操作 → setIdle(false)
 
 **Step 5: 写测试**
 ```bash
-# 测试状态机转换逻辑
-cd apps/pawse && npx vitest
+cd ~/pawse && npx vitest
 ```
 
 **Step 6: 提交**
 ```bash
-git add . && git commit -m "feat: timer state machine with idle detection"
+cd ~/pawse && git add . && git commit -m "feat: timer state machine with idle detection" && git push
 ```
 
 ---
@@ -293,10 +297,10 @@ git add . && git commit -m "feat: timer state machine with idle detection"
 ## Task 6: Overlay 窗口
 
 **Files:**
-- Modify: `apps/pawse/src-tauri/src/lib.rs` — 多窗口管理
-- Create: `apps/pawse/src/overlay/OverlayWindow.tsx`
-- Create: `apps/pawse/src/overlay/OverlayApp.tsx` (独立入口)
-- Modify: `apps/pawse/src-tauri/tauri.conf.json`
+- Modify: `~/pawse/src-tauri/src/lib.rs` — 多窗口管理
+- Create: `~/pawse/src/overlay/OverlayWindow.tsx`
+- Create: `~/pawse/src/overlay/OverlayApp.tsx` (独立入口)
+- Modify: `~/pawse/src-tauri/tauri.conf.json`
 
 **Step 1: Rust 侧创建 Overlay 窗口**
 ```rust
@@ -312,13 +316,13 @@ git add . && git commit -m "feat: timer state machine with idle detection"
 
 **Step 3: 验证窗口**
 ```bash
-npm run tauri dev
+cd ~/pawse && npm run tauri dev
 ```
 预期: 主窗口 + 一个小 Overlay 透明窗口同时出现
 
 **Step 4: 提交**
 ```bash
-git add . && git commit -m "feat: overlay window with always-on-top transparent"
+cd ~/pawse && git add . && git commit -m "feat: overlay window with always-on-top transparent" && git push
 ```
 
 ---
@@ -326,8 +330,8 @@ git add . && git commit -m "feat: overlay window with always-on-top transparent"
 ## Task 7: 宠物上传 UI
 
 **Files:**
-- Create: `apps/pawse/src/components/FileUpload.tsx`
-- Modify: `apps/pawse/src/pages/UploadPet.tsx`
+- Create: `~/pawse/src/components/FileUpload.tsx`
+- Modify: `~/pawse/src/pages/UploadPet.tsx`
 
 **Step 1: 创建 FileUpload 组件**
 - 拖拽 + 点击上传
@@ -342,7 +346,7 @@ git add . && git commit -m "feat: overlay window with always-on-top transparent"
 
 **Step 3: 提交**
 ```bash
-git add . && git commit -m "feat: pet photo upload with drag-drop & validation"
+cd ~/pawse && git add . && git commit -m "feat: pet photo upload with drag-drop & validation" && git push
 ```
 
 ---
@@ -350,9 +354,9 @@ git add . && git commit -m "feat: pet photo upload with drag-drop & validation"
 ## Task 8: AI 宠物生成（OpenAI + rembg）
 
 **Files:**
-- Create: `apps/pawse/src/services/openai.ts`
-- Create: `apps/pawse/src/services/rembg.ts`
-- Modify: `apps/pawse/src/pages/GeneratePet.tsx`
+- Create: `~/pawse/src/services/openai.ts`
+- Create: `~/pawse/src/services/rembg.ts`
+- Modify: `~/pawse/src/pages/GeneratePet.tsx`
 
 **Step 1: 创建 openai.ts**
 ```typescript
@@ -392,7 +396,7 @@ async function removeBackground(inputPath: string, outputPath: string) {
 
 **Step 4: 提交**
 ```bash
-git add . && git commit -m "feat: AI pet generation with DALL-E 3 + rembg"
+cd ~/pawse && git add . && git commit -m "feat: AI pet generation with DALL-E 3 + rembg" && git push
 ```
 
 ---
@@ -400,11 +404,11 @@ git add . && git commit -m "feat: AI pet generation with DALL-E 3 + rembg"
 ## Task 9: 动画系统
 
 **Files:**
-- Create: `apps/pawse/src/animations/idle.ts`
-- Create: `apps/pawse/src/animations/blink.ts`
-- Create: `apps/pawse/src/animations/sleep.ts`
-- Create: `apps/pawse/src/animations/pawBlock.ts`
-- Create: `apps/pawse/src/components/PetCharacter.tsx`
+- Create: `~/pawse/src/animations/idle.ts`
+- Create: `~/pawse/src/animations/blink.ts`
+- Create: `~/pawse/src/animations/sleep.ts`
+- Create: `~/pawse/src/animations/pawBlock.ts`
+- Create: `~/pawse/src/components/PetCharacter.tsx`
 
 **Step 1: PetCharacter 组件**
 ```tsx
@@ -427,7 +431,7 @@ interface PetCharacterProps {
 
 **Step 3: 提交**
 ```bash
-git add . && git commit -m "feat: pet animation system with idle/blink/sleep/pawBlock"
+cd ~/pawse && git add . && git commit -m "feat: pet animation system with idle/blink/sleep/pawBlock" && git push
 ```
 
 ---
@@ -435,9 +439,9 @@ git add . && git commit -m "feat: pet animation system with idle/blink/sleep/paw
 ## Task 10: 提醒系统集成
 
 **Files:**
-- Modify: `apps/pawse/src/stores/timerStore.ts`
-- Modify: `apps/pawse/src/overlay/OverlayWindow.tsx`
-- Create: `apps/pawse/src/components/ReminderBanner.tsx`
+- Modify: `~/pawse/src/stores/timerStore.ts`
+- Modify: `~/pawse/src/overlay/OverlayWindow.tsx`
+- Create: `~/pawse/src/components/ReminderBanner.tsx`
 
 **Step 1: 触发逻辑**
 - 达到工作时长 → timerStore 触发 `triggerBreak()`
@@ -453,7 +457,7 @@ git add . && git commit -m "feat: pet animation system with idle/blink/sleep/paw
 
 **Step 4: 提交**
 ```bash
-git add . && git commit -m "feat: break reminder system with custom text"
+cd ~/pawse && git add . && git commit -m "feat: break reminder system with custom text" && git push
 ```
 
 ---
@@ -461,8 +465,8 @@ git add . && git commit -m "feat: break reminder system with custom text"
 ## Task 11: 设置系统
 
 **Files:**
-- Modify: `apps/pawse/src/pages/Settings.tsx`
-- Create: `apps/pawse/src/services/settings.ts`
+- Modify: `~/pawse/src/pages/Settings.tsx`
+- Create: `~/pawse/src/services/settings.ts`
 
 **Step 1: 设置界面**
 - 工作时间滑块（15-120 分钟）
@@ -480,7 +484,7 @@ git add . && git commit -m "feat: break reminder system with custom text"
 
 **Step 3: 提交**
 ```bash
-git add . && git commit -m "feat: settings page with persistence"
+cd ~/pawse && git add . && git commit -m "feat: settings page with persistence" && git push
 ```
 
 ---
@@ -488,10 +492,10 @@ git add . && git commit -m "feat: settings page with persistence"
 ## Task 12: Dashboard 主控制台
 
 **Files:**
-- Modify: `apps/pawse/src/pages/Dashboard.tsx`
-- Create: `apps/pawse/src/components/WorkStatus.tsx`
-- Create: `apps/pawse/src/components/PetPreview.tsx`
-- Create: `apps/pawse/src/components/TimerDisplay.tsx`
+- Modify: `~/pawse/src/pages/Dashboard.tsx`
+- Create: `~/pawse/src/components/WorkStatus.tsx`
+- Create: `~/pawse/src/components/PetPreview.tsx`
+- Create: `~/pawse/src/components/TimerDisplay.tsx`
 
 **Step 1: Dashboard 布局**
 - 顶部: 宠物头像 + 名称
@@ -503,7 +507,7 @@ git add . && git commit -m "feat: settings page with persistence"
 
 **Step 3: 提交**
 ```bash
-git add . && git commit -m "feat: main dashboard with timer display"
+cd ~/pawse && git add . && git commit -m "feat: main dashboard with timer display" && git push
 ```
 
 ---
@@ -511,8 +515,8 @@ git add . && git commit -m "feat: main dashboard with timer display"
 ## Task 13: 流程串联 + 首次启动引导
 
 **Files:**
-- Modify: `apps/pawse/src/App.tsx`
-- Modify: `apps/pawse/src-tauri/src/lib.rs`
+- Modify: `~/pawse/src/App.tsx`
+- Modify: `~/pawse/src-tauri/src/lib.rs`
 
 **Step 1: 首次启动检测**
 - 检查 pets 表是否有数据
@@ -526,7 +530,7 @@ git add . && git commit -m "feat: main dashboard with timer display"
 
 **Step 3: 提交**
 ```bash
-git add . && git commit -m "feat: full onboarding flow + state integration"
+cd ~/pawse && git add . && git commit -m "feat: full onboarding flow + state integration" && git push
 ```
 
 ---
@@ -534,13 +538,13 @@ git add . && git commit -m "feat: full onboarding flow + state integration"
 ## Task 14: 打包配置
 
 **Files:**
-- Modify: `apps/pawse/src-tauri/tauri.conf.json`
-- Create: `apps/pawse/src-tauri/ubuntu/build.conf`
+- Modify: `~/pawse/src-tauri/tauri.conf.json`
+- Create: `~/pawse/src-tauri/ubuntu/build.conf`
 - Create: 打包脚本
 
 **Step 1: Ubuntu 打包配置**
 ```bash
-npm run tauri build
+cd ~/pawse && npm run tauri build
 ```
 输出: `.deb` / `.AppImage`
 
@@ -553,7 +557,7 @@ npm run tauri build
 
 **Step 4: 提交**
 ```bash
-git add . && git commit -m "chore: packaging config for Ubuntu/macOS/Windows"
+cd ~/pawse && git add . && git commit -m "chore: packaging config for Ubuntu/macOS/Windows" && git push
 ```
 
 ---
